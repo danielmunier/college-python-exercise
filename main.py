@@ -19,11 +19,10 @@ def new_registry():
                 #Gera um número entre 0 e 999 para cada usuário cadastrado
                 voucher = randint(100,999)
 
-                #Envia para um txt
+                #Envia os dados para um txt
                 with open('dados.txt','a') as file:
                     file.write(f'"Voucher: {voucher}, Nome: {user_name}, email:{email}, telefone: {telefone}, curso:{curso}",\n')
-                    file.close()
-
+                   
                 #Caso o Voucher gerado já se encontra no dicionário, então o programa iniciará um loop até gerar um Voucher totalmente novo
                 if voucher in inscricoesDB:
                     while voucher in inscricoesDB:
