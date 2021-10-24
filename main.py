@@ -20,8 +20,7 @@ def new_registry():
                 voucher = randint(100,999)
 
                 #Envia os dados para um txt
-                with open('dados.txt','a') as file:
-                    file.write(f'"Voucher: {voucher}, Nome: {user_name}, email:{email}, telefone: {telefone}, curso:{curso}",\n')
+
                    
                 #Caso o Voucher gerado já se encontra no dicionário, então o programa iniciará um loop até gerar um Voucher totalmente novo
                 if voucher in inscricoesDB:
@@ -33,39 +32,45 @@ def new_registry():
                             break
 
                 #Envia as informações para o dicionário
-                inscricoesDB[voucher] = {'Voucher': voucher,'Nome': user_name,'email':email,'telefone': telefone,'curso':curso}
-               
+                inscricoesDB[voucher] = {'Voucher': voucher,'Nome': user_name,'Email':email,'Telefone': telefone,'Curso':curso}
+                with open('dados.txt','a') as file:
+                    file.writelines(f'{inscricoesDB[voucher]}\n')               
                 #Verifica a necessidade do usuário de cadastrar mais pessoas no dicionário
                 continuar = int(input('Deseja continuar? 1 - Sim  2 - Não'))
                 sys('cls')
-
                 if continuar == 1:
                     continue
                 elif continuar == 2:
                     return ''
 
     except ValueError:
-            print('Valor inválido')
+        print('Valor inválido')
     except:
-            print('Algo inesperado aconteceu...')
+        print('Algo inesperado aconteceu...')
     
-def show_registry(): #Função na qual irá mostrar os cadastrados presentes no dicionário
+def show_registry(): #Função na qual irá mostrar os cadastrados presentes no arquivo de texto
     sys('cls')
-    if len(inscricoesDB) == 0: #Caso não tenha nenhum elemento dentro do dicionário
-        print('Nenhuma inscrição cadastrada')
-        
-    else:
-        print(f'Total de {len(inscricoesDB)} usuários cadastrados!') #Mostra o total de usuários cadastrados no dicionário
-        for i in inscricoesDB:
-           print(f'''
-            Voucher:  {i}
-            Nome: {inscricoesDB[i]['Nome']}
-            Email: {inscricoesDB[i]['email']}
-            Telefone: {inscricoesDB[i]['telefone']}
-            Curso: {inscricoesDB[i]['curso']}''')
+    with open('dados.txt','r') as file:
+        if len(file.readlines()) == 0: #Caso não tenha nenhum elemento dentro do txt
+            print('Nenhuma inscrição cadastrada')
+            file.close()
+        else:
+            with open('dados.txt','r') as file:
+                c = 0
+                for i in file:
+                    print(i.strip()) 
+                    c+=1
+                print(f'\nTotal de {c} usuários cadastrados!')
+        """  for i in file:
+            print(f'''
+                Voucher:  {i}
+                Nome: {inscricoesDB[i]['Nome']}
+                Email: {inscricoesDB[i]['email']}   #Irá ler o dicionário local
+                Telefone: {inscricoesDB[i]['telefone']}
+                Curso: {inscricoesDB[i]['curso']}''') """
 
-    input('Aperte qualquer tecla para continuar...')
-    sys('cls')
+        input('Aperte qualquer tecla para continuar...')
+        sys('cls')
         
 #Menu de opções para chamar as funçoes do programa
 def menu():
@@ -77,17 +82,16 @@ def menu():
                     '2  -  Visualizar inscrições\n'
                     '0  -  Sair\n')
 
-                #Recebe a escolha do usuário
                 user_choice = int(input('Escolha: : '))
-                if user_choice not in [1,2,0]: #CASO A ESCOLHA DO USUÁRIO NÃO ESTEJA ENTRE AS OPÇÕES DO MENU
+                if user_choice not in [1,2,0]: #Caso a escolha do usuário não esteja no menu de opções
                     sys('cls')
                     print('Erro: Opção inválida!')
                     continue
 
-                elif user_choice == 1:#Chama a função inscrição para cadastramento de usuários no dicionário
+                elif user_choice == 1:#Chama a função de inscrição para cadastramento de usuários no dicionário 
                     new_registry() 
 
-                elif user_choice == 2:#Chama a função que irá mostrar todos os usuários cadastrados
+                elif user_choice == 2:#Chama a função que irá mostrar todos os usuários cadastrados 
                     show_registry()
 
                 elif user_choice == 0:#Encerra o programa
