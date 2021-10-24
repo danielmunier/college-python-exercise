@@ -18,8 +18,10 @@ def new_registry():
 
                 #Gera um número entre 0 e 999 para cada usuário cadastrado
                 voucher = randint(100,999)
+
+                #Envia para um txt
                 with open('dados.txt','a') as file:
-                    file.write(f"\n'Voucher: {voucher}\nNome: {user_name}\nemail:{email}\ntelefone: {telefone}\ncurso:{curso}',\n")
+                    file.write(f'"Voucher: {voucher}, Nome: {user_name}, email:{email}, telefone: {telefone}, curso:{curso}",\n')
                     file.close()
 
                 #Caso o Voucher gerado já se encontra no dicionário, então o programa iniciará um loop até gerar um Voucher totalmente novo
@@ -103,7 +105,7 @@ def menu():
                 sys('cls')
                 print('Programa encerrado pelo usuário!')
                 break
-            
+
             except: #CASO OCORRA QUALQUER ERRO
                 print('Algo inesperado aconteceu...')
 
