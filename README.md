@@ -1,2 +1,2 @@
 # college-python-exercise
- Um programa simples que armazena cadastros que usuário entrega e envia os dados para um bloco de notas
+ Um programa simples feito por um iniciante em python que armazena cadastros do usuário e envia os dados para um dicionário e para um bloco de notas
